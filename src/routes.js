@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import UserController from './app/controllers/UserController.js';
+import SessionController from './app/controllers/SessionController.js';
 
 const routes = new Router();
 
@@ -8,4 +9,5 @@ const routes = new Router();
 //CRIANDO USUARIO
 routes.post('/users', UserController.store);
 
+routes.post('/session', SessionController.store)
 export default routes;
