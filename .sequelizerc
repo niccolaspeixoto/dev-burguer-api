@@ -1,0 +1,7 @@
+const { resolve } = require('node:path') //ajuda a importar o arquivo do db
+
+module.exports = {
+    config: resolve(__dirname, 'src', 'config', 'database.cjs'), //mostrando o caminho do arquivo de configuração
+    'migrations-path': resolve(__dirname, 'src', 'database', 'migrations'), // mostrando o caminho das migrations
+    'models-path': resolve(__dirname, 'src', 'app', 'models') // mostrando o caminho das models
+}
