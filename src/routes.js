@@ -2,19 +2,29 @@ import { Router } from 'express';
 import UserController from './app/controllers/UserController.js';
 import SessionController from './app/controllers/SessionController.js';
 import ProductController from './app/controllers/ProductController.js';
+import multer from 'multer';
+import multerConfig from './config/multer.cjs';
 
 const routes = new Router();
 
+const upload = multer(multerConfig)
+
 // MÉTODOS HTTP
 
+//USUARIOS
 //CRIANDO USUARIO
 routes.post('/users', UserController.store);
 
 //fazendo login
 routes.post('/session', SessionController.store)
 
+
+//PRODUTO
 //criando produto
-routes.post('/create-products', ProductController.store)
+routes.post('/create-products', upload.single('file'), ProductController.store)
+
+//buscando produtos
+routes.get('/products', ProductController.index)
 
 
 
