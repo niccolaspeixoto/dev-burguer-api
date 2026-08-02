@@ -16,6 +16,7 @@ class User extends Model {
         underscored: true,
       },
     );
+    return this;
   }
 }
 

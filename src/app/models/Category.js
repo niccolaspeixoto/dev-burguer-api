@@ -12,6 +12,8 @@ class Category extends Model {
         underscored: true,
       },
     );
+
+    return this;
   }
 }
 
