@@ -6,6 +6,7 @@ import multer from 'multer';
 import multerConfig from './config/multer.cjs';
 import authMiddleware from './middlewares/auth.js';
 import CategoryController from './app/controllers/CategoryController.js';
+import adminMiddleware from './middlewares/admin.js'
 
 const routes = new Router();
 
@@ -22,9 +23,10 @@ routes.use(authMiddleware) // dessa linha para baixo, só pode acessar as rotas 
 //CRIANDO USUARIO
 routes.post('/users', UserController.store);
 
+
 //PRODUTO
 //criando produto
-routes.post('/create-products', upload.single('file') /* <- é um tipo de middleware, vem antes do controller */, ProductController.store)
+routes.post('/create-products', adminMiddleware, upload.single('file') /* <- é um tipo de middleware, vem antes do controller */, ProductController.store)
 
 //buscando produtos
 routes.get('/products', ProductController.index)
@@ -32,7 +34,7 @@ routes.get('/products', ProductController.index)
 
 //CATEGORIA
 //criando categoria
-routes.post('/create-categories', CategoryController.store)
+routes.post('/create-categories', adminMiddleware, CategoryController.store)
 
 //buscando categorias
 routes.get('/categories', CategoryController.index)

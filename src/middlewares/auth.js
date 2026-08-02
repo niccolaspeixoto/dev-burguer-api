@@ -16,8 +16,9 @@ const authMiddleware = (req, res, next) => {
         if (error){ //se tiver algum erro, ele vai falar qual é
             throw Error()
         }
-
+        
         req.userId = decoded.id// se nao tiver erro, cria um campo na requisição chamado: "userId", que receberá o valor do id que vem do token decodado.
+        req.userIsAdmin = decoded.admin // cria um campo na requisição chamado: "userIsAdmin", que receberá o valor do admin que vem do token decodado.
     })
   }catch(_error){
     return res.status(401).json({error: 'Token is invalid'}) // me fala qual é o erro
