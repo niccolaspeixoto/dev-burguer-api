@@ -6,7 +6,6 @@ class Product extends Model {
       {
         name: Sequelize.STRING,
         price: Sequelize.INTEGER,
-        category: Sequelize.STRING,
         path: Sequelize.STRING,
         url: {
           type: Sequelize.VIRTUAL,
@@ -21,6 +20,15 @@ class Product extends Model {
         underscored: true,
       },
     );
+
+    return this;
+  }
+
+  static associate(models) { // esse bloco serve para dizer a model que ela tem uma relação com a model Category, e que a chave estrangeira é category_id
+    this.belongsTo(models.Category, { 
+      foreignKey: 'category_id',
+      as: 'category', // esse as é o nome que vamos dar para a relação, ou seja, quando formos buscar um produto, vamos poder buscar a categoria dele através do nome category
+     });
   }
 }
 
