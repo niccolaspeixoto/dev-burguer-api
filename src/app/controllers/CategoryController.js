@@ -44,8 +44,10 @@ class CategoryController {
   }
 
   async update(req, res) {
+    // editando produto
     const schema = Yup.object({
-      name: Yup.string().required(),
+      name: Yup.string(),
+      path: Yup.string(),
     });
 
     try {
@@ -57,7 +59,13 @@ class CategoryController {
     }
 
     const { name } = req.body;
-    const { filename } = req.file;
+    const { id } = req.params;
+
+    let path;
+    if (req.file) {
+      const { filename } = req.file;
+      path = filename;
+    }
 
     const existingCategory = await Category.findOne({
       where: {
@@ -70,12 +78,19 @@ class CategoryController {
     }
 
     try {
-      const newCategory = await Category.create({
-        name,
-        path: filename,
-      });
+      await Category.update(
+        {
+          name,
+          path,
+        },
+        {
+          where: {
+            id,
+          },
+        },
+      );
 
-      return res.status(201).json(newCategory);
+      return res.status(201).json();
     } catch (err) {
       console.log('MESSAGE:', err.message);
       console.log('ORIGINAL:', err.original);

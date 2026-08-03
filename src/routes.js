@@ -39,6 +39,9 @@ routes.get('/products', ProductController.index)
 //criando categoria
 routes.post('/create-categories', adminMiddleware, upload.single('file'), CategoryController.store)
 
+//editando categoria
+routes.put('/update-categories/:id', adminMiddleware, upload.single('file'), CategoryController.update)
+
 //buscando categorias
 routes.get('/categories', CategoryController.index)
 
