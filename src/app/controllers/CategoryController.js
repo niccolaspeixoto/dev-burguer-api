@@ -17,6 +17,7 @@ class CategoryController {
     }
 
     const { name } = req.body;
+    const { filename } = req.file;
 
     const existingCategory = await Category.findOne({
       where: {
@@ -31,6 +32,47 @@ class CategoryController {
     try {
       const newCategory = await Category.create({
         name,
+        path: filename,
+      });
+
+      return res.status(201).json(newCategory);
+    } catch (err) {
+      console.log('MESSAGE:', err.message);
+      console.log('ORIGINAL:', err.original);
+      return res.status(400).json({ error: err.message });
+    }
+  }
+
+  async update(req, res) {
+    const schema = Yup.object({
+      name: Yup.string().required(),
+    });
+
+    try {
+      //validando os dados
+      schema.validateSync(req.body, { abortEarly: false }); //validando o body com as informações certas do jeito que a model está esperando.
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({ error: err.message });
+    }
+
+    const { name } = req.body;
+    const { filename } = req.file;
+
+    const existingCategory = await Category.findOne({
+      where: {
+        name,
+      },
+    });
+
+    if (existingCategory) {
+      return res.status(400).json({ error: 'Category already exists.' });
+    }
+
+    try {
+      const newCategory = await Category.create({
+        name,
+        path: filename,
       });
 
       return res.status(201).json(newCategory);

@@ -37,7 +37,7 @@ routes.get('/products', ProductController.index)
 
 //CATEGORIA
 //criando categoria
-routes.post('/create-categories', adminMiddleware, CategoryController.store)
+routes.post('/create-categories', adminMiddleware, upload.single('file'), CategoryController.store)
 
 //buscando categorias
 routes.get('/categories', CategoryController.index)
