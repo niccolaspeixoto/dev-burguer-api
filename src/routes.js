@@ -28,6 +28,9 @@ routes.post('/users', UserController.store);
 //criando produto
 routes.post('/create-products', adminMiddleware, upload.single('file') /* <- é um tipo de middleware, vem antes do controller */, ProductController.store)
 
+//editando produto
+routes.put('/update-products/:id', adminMiddleware, upload.single('file') /* <- é um tipo de middleware, vem antes do controller */, ProductController.update)
+
 //buscando produtos
 routes.get('/products', ProductController.index)
 

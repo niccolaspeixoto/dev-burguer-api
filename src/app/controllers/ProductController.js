@@ -8,6 +8,7 @@ class ProductController {
       name: Yup.string().required(),
       price: Yup.number().required(),
       category_id: Yup.number().required(),
+      offer: Yup.boolean(),
     });
 
     try {
@@ -18,7 +19,7 @@ class ProductController {
       return res.status(400).json({ error: err.message });
     }
 
-    const { name, price, category_id } = req.body;
+    const { name, price, category_id, offer } = req.body;
 
     const { filename } = req.file;
 
@@ -27,10 +28,59 @@ class ProductController {
       name,
       price,
       category_id,
-      path: filename
+      path: filename,
+      offer
     });
 
     return res.status(201).json(newProduct);
+  } catch (err) {
+    console.log('MESSAGE:', err.message);
+    console.log('ORIGINAL:', err.original);
+    return res.status(400).json({ error: err.message });
+  }
+
+  }
+
+
+  async update(req, res) {
+    const schema = Yup.object({
+      name: Yup.string(),
+      price: Yup.number(),
+      category_id: Yup.number(),
+      offer: Yup.boolean(),
+    });
+
+    try {
+      //validando os dados
+      schema.validateSync(req.body, { abortEarly: false }); //validando o body com as informações certas do jeito que a model está esperando.
+    } catch (err) {
+      console.log(err)
+      return res.status(400).json({ error: err.message });
+    }
+
+    const { name, price, category_id, offer } = req.body;
+    const { id }  = req.params;
+
+    let path //esse bloco ta dizendo que se o req.file existir, então ele vai pegar o filename do req.file e atribuir a variável path, caso contrário, path vai ser undefined. Isso é útil para quando a gente quer atualizar um produto e não quer mudar a imagem dele, então a gente não passa o arquivo no req.file e o path vai continuar sendo undefined.
+    if (req.file){
+      const { filename } = req.file;
+      path = filename;
+    }
+
+    try {
+    await Product.update({
+      name,
+      price,
+      category_id,
+      path,
+      offer
+    }, {
+      where: {
+        id
+      }
+    });
+
+    return res.status(201).json();
   } catch (err) {
     console.log('MESSAGE:', err.message);
     console.log('ORIGINAL:', err.original);
