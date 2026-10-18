@@ -12,6 +12,7 @@ class CategoryController {
       //validando os dados
       schema.validateSync(req.body, { abortEarly: false }); //validando o body com as informações certas do jeito que a model está esperando.
     } catch (err) {
+      console.log(err);
       return res.status(400).json({ error: err.message });
     }
 
@@ -36,6 +37,8 @@ class CategoryController {
 
       return res.status(201).json(newCategory);
     } catch (err) {
+      console.log('MESSAGE:', err.message);
+      console.log('ORIGINAL:', err.original);
       return res.status(400).json({ error: err.message });
     }
   }
@@ -51,6 +54,7 @@ class CategoryController {
       //validando os dados
       schema.validateSync(req.body, { abortEarly: false }); //validando o body com as informações certas do jeito que a model está esperando.
     } catch (err) {
+      console.log(err);
       return res.status(400).json({ error: err.message });
     }
 
@@ -88,6 +92,8 @@ class CategoryController {
 
       return res.status(201).json();
     } catch (err) {
+      console.log('MESSAGE:', err.message);
+      console.log('ORIGINAL:', err.original);
       return res.status(400).json({ error: err.message });
     }
   }

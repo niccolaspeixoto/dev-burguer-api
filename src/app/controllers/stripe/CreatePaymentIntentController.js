@@ -28,6 +28,7 @@ class CreatePaymentIntentController {
             //validando os dados
             schema.validateSync(req.body, { abortEarly: false, strict: true }); //validando o body com as informações certas do jeito que a model está esperando.
         } catch (err) {
+            console.log(err);
             return res.status(400).json({ error: err.message });
         }
 
