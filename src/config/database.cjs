@@ -3,7 +3,7 @@ module.exports = {
     host: 'localhost', // dizendo ao Sequelize onde o banco está rodando
     username: 'admin', // nome do usuario
     password: '1234',// senha do admin
-    database: 'dev-burguer-db', // nome do banco de dados
+    database: 'dev-burguer-postgres-new', // nome do banco de dados
     define: {
         timeStamps: true, // conseguimos trackear a data de inserção/criação/atualização do usuario
         underScored: true,

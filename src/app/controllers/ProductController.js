@@ -89,6 +89,28 @@ class ProductController {
 
   }
 
+  async delete(req, res) {
+    const { id } = req.params;
+
+    try {
+      const deletedCount = await Product.destroy({
+        where: {
+          id,
+        },
+      });
+
+      if (!deletedCount) {
+        return res.status(404).json({ error: 'Produto não encontrado.' });
+      }
+
+      return res.status(200).json({ message: 'Produto excluído com sucesso!' });
+    } catch (err) {
+      console.log('MESSAGE:', err.message);
+      console.log('ORIGINAL:', err.original);
+      return res.status(400).json({ error: err.message });
+    }
+  }
+
   async index(_req, res){
     const products = await Product.findAll({
       include: {

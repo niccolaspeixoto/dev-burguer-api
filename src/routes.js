@@ -8,6 +8,7 @@ import authMiddleware from './app/middlewares/auth.js'
 import CategoryController from './app/controllers/CategoryController.js';
 import adminMiddleware from './app/middlewares/admin.js'
 import OrderController from './app/controllers/OrderController.js';
+import CreatePaymentIntentController from './app/controllers/stripe/CreatePaymentIntentController.js'
 
 const routes = new Router();
 
@@ -18,11 +19,13 @@ const upload = multer(multerConfig)
 //fazendo login
 routes.post('/session', SessionController.store)
 
-routes.use(authMiddleware) // dessa linha para baixo, só pode acessar as rotas os users admin.
-
 //USUARIOS
 //CRIANDO USUARIO
 routes.post('/users', UserController.store);
+
+routes.use(authMiddleware) // dessa linha para baixo, só pode acessar as rotas os users admin.
+
+
 
 
 //PRODUTO
@@ -34,6 +37,9 @@ routes.put('/update-products/:id', adminMiddleware, upload.single('file') /* <- 
 
 //buscando produtos
 routes.get('/products', ProductController.index)
+
+//excluindo produto
+routes.delete('/delete-products/:id', adminMiddleware, ProductController.delete)
 
 
 //CATEGORIA
@@ -48,13 +54,16 @@ routes.get('/categories', CategoryController.index)
 
 //PEDIDOS
 //criando pedidos
-routes.post('/create-orders', adminMiddleware, OrderController.store)
+routes.post('/create-orders', OrderController.store)
 
 //editando pedidos
 routes.put('/update-orders/:id', adminMiddleware, OrderController.update)
 
 //buscando pedidos
 routes.get('/orders', adminMiddleware, OrderController.index)
+
+
+routes.post('/create-payment-intent', CreatePaymentIntentController.store)
 
 
 export default routes;
