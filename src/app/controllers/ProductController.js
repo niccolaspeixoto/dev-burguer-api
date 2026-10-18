@@ -15,7 +15,6 @@ class ProductController {
       //validando os dados
       schema.validateSync(req.body, { abortEarly: false }); //validando o body com as informações certas do jeito que a model está esperando.
     } catch (err) {
-      console.log(err)
       return res.status(400).json({ error: err.message });
     }
 
@@ -34,8 +33,6 @@ class ProductController {
 
     return res.status(201).json(newProduct);
   } catch (err) {
-    console.log('MESSAGE:', err.message);
-    console.log('ORIGINAL:', err.original);
     return res.status(400).json({ error: err.message });
   }
 
@@ -54,7 +51,6 @@ class ProductController {
       //validando os dados
       schema.validateSync(req.body, { abortEarly: false }); //validando o body com as informações certas do jeito que a model está esperando.
     } catch (err) {
-      console.log(err)
       return res.status(400).json({ error: err.message });
     }
 
@@ -82,8 +78,6 @@ class ProductController {
 
     return res.status(201).json();
   } catch (err) {
-    console.log('MESSAGE:', err.message);
-    console.log('ORIGINAL:', err.original);
     return res.status(400).json({ error: err.message });
   }
 
@@ -105,8 +99,6 @@ class ProductController {
 
       return res.status(200).json({ message: 'Produto excluído com sucesso!' });
     } catch (err) {
-      console.log('MESSAGE:', err.message);
-      console.log('ORIGINAL:', err.original);
       return res.status(400).json({ error: err.message });
     }
   }
