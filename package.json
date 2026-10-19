@@ -7,7 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --watch --env-file=.env src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "migrate": "node --env-file=.env node_modules/sequelize-cli/lib/sequelize db:migrate --config src/config/database.cjs --migrations-path src/database/migrations --models-path src/app/models",
+    "migrate:undo": "node --env-file=.env node_modules/sequelize-cli/lib/sequelize db:migrate:undo --config src/config/database.cjs --migrations-path src/database/migrations --models-path src/app/models"
   },
   "keywords": [],
   "author": "",
