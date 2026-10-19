@@ -1,15 +1,14 @@
-const multer = require('multer');
-const { resolve } = require('node:path');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const { v4 } = require('uuid');
+const cloudinary = require('./cloudinary.cjs');
 
-//configurando multer para o upload de imagens no projeto.
+//configurando multer para o upload de imagens no Cloudinary.
 module.exports = {
-  storage: multer.diskStorage({
-    destination: resolve(__dirname, '..', '..', 'uploads'),
-    filename: (_req, file, cb) => {
-      const uniqueName = v4().concat(`-${file.originalname}`);
-
-      return cb(null, uniqueName);
+  storage: new CloudinaryStorage({
+    cloudinary,
+    params: {
+      folder: 'dev-burguer',
+      public_id: (_req, file) => v4().concat(`-${file.originalname}`),
     },
   }),
 };
