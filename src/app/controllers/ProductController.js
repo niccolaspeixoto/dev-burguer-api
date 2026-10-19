@@ -20,14 +20,14 @@ class ProductController {
 
     const { name, price, category_id, offer } = req.body;
 
-    const { filename } = req.file;
+    const { path: imageUrl } = req.file;
 
     try {
     const newProduct = await Product.create({
       name,
       price,
       category_id,
-      path: filename,
+      path: imageUrl,
       offer
     });
 
@@ -57,10 +57,9 @@ class ProductController {
     const { name, price, category_id, offer } = req.body;
     const { id }  = req.params;
 
-    let path //esse bloco ta dizendo que se o req.file existir, então ele vai pegar o filename do req.file e atribuir a variável path, caso contrário, path vai ser undefined. Isso é útil para quando a gente quer atualizar um produto e não quer mudar a imagem dele, então a gente não passa o arquivo no req.file e o path vai continuar sendo undefined.
+    let path //esse bloco ta dizendo que se o req.file existir, então ele vai pegar a URL do req.file e atribuir a variável path, caso contrário, path vai ser undefined. Isso é útil para quando a gente quer atualizar um produto e não quer mudar a imagem dele, então a gente não passa o arquivo no req.file e o path vai continuar sendo undefined.
     if (req.file){
-      const { filename } = req.file;
-      path = filename;
+      path = req.file.path;
     }
 
     try {

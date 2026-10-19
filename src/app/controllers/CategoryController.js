@@ -16,7 +16,7 @@ class CategoryController {
     }
 
     const { name } = req.body;
-    const { filename } = req.file;
+    const { path: imageUrl } = req.file;
 
     const existingCategory = await Category.findOne({
       where: {
@@ -31,7 +31,7 @@ class CategoryController {
     try {
       const newCategory = await Category.create({
         name,
-        path: filename,
+        path: imageUrl,
       });
 
       return res.status(201).json(newCategory);
@@ -59,8 +59,7 @@ class CategoryController {
 
     let path;
     if (req.file) {
-      const { filename } = req.file;
-      path = filename;
+      path = req.file.path;
     }
 
     const existingCategory = await Category.findOne({
